@@ -33,4 +33,6 @@ object Playground extends App {
   bindingFuture
     .flatMap(_.unbind())
     .onComplete(_ => system.terminate())
+
+  val l = List(2).flatMap(Seq(_))
 }
