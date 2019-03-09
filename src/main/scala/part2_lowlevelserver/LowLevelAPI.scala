@@ -1,16 +1,15 @@
-package playground
+package part2_lowlevelserver
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.Http.IncomingConnection
 import akka.http.scaladsl.model._
-import akka.http.scaladsl.model.headers.Location
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Flow, Sink}
 
 import scala.concurrent.Future
-import scala.util.{Failure, Success}
 import scala.concurrent.duration._
+import scala.util.{Failure, Success}
 
 object LowLevelAPI extends App {
 
