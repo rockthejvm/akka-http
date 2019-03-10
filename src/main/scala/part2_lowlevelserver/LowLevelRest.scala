@@ -140,7 +140,6 @@ object LowLevelRest extends App with GuitarStoreJsonProtocol {
     }
   }
 
-
   val requestHandler: HttpRequest => Future[HttpResponse] = {
     case HttpRequest(HttpMethods.POST, uri@Uri.Path("/api/guitar/inventory"), _, _, _) =>
       val query = uri.query()
@@ -174,9 +173,6 @@ object LowLevelRest extends App with GuitarStoreJsonProtocol {
           }
         case None => Future(HttpResponse(StatusCodes.BadRequest))
       }
-
-
-
 
     case HttpRequest(HttpMethods.GET, uri@Uri.Path("/api/guitar"), _, _, _) =>
       /*
@@ -213,8 +209,6 @@ object LowLevelRest extends App with GuitarStoreJsonProtocol {
         }
       }
 
-
-
     case request: HttpRequest =>
       request.discardEntityBytes()
       Future {
@@ -227,7 +221,7 @@ object LowLevelRest extends App with GuitarStoreJsonProtocol {
   /**
     * Exercise: enhance the Guitar case class with a quantity field, by default 0
     * - GET to /api/guitar/inventory?inStock=true/false which returns the guitars in stock as a JSON
-    * V POST to /api/guitar/inventory?id=X&quantity=Y which adds Y guitars to the stock for guitar with id X
+    * - POST to /api/guitar/inventory?id=X&quantity=Y which adds Y guitars to the stock for guitar with id X
     *
     */
 }
