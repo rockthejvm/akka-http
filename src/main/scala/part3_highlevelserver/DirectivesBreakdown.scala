@@ -94,4 +94,92 @@ object DirectivesBreakdown extends App {
 
   Http().bindAndHandle(queryParamExtractionRoute, "localhost", 8080)
 
+  /**
+    * Type #3: composite directives
+    */
+
+  val simpleNestedRoute =
+    path("api" / "item") {
+      get {
+        complete(StatusCodes.OK)
+      }
+    }
+
+  val compactSimpleNestedRoute = (path("api" / "item") & get) {
+    complete(StatusCodes.OK)
+  }
+
+  val compactExtractRequestRoute =
+    (path("controlEndpoint") & extractRequest & extractLog) { (request, log) =>
+      log.info(s"I got the http request: $request")
+      complete(StatusCodes.OK)
+    }
+
+  // /about and /aboutUs
+  val repeatedRoute =
+    path("about") {
+      complete(StatusCodes.OK)
+    } ~
+    path("aboutUs") {
+      complete(StatusCodes.OK)
+    }
+
+  val dryRoute =
+    (path("about") | path("aboutUs")) {
+      complete(StatusCodes.OK)
+    }
+
+  // yourblog.com/42 AND yourblog.com?postId=42
+
+  val blogByIdRoute =
+    path(IntNumber) { (blogpostId: Int) =>
+      // complex server logic
+      complete(StatusCodes.OK)
+    }
+
+  val blogByQueryParamRoute =
+    parameter('postId.as[Int]) { (blogpostId: Int) =>
+      // the SAME server logic
+      complete(StatusCodes.OK)
+    }
+
+  val combinedBlodByIdRoute =
+    (path(IntNumber) | parameter('postId.as[Int])) { (blogpostId: Int) =>
+      // your original server logic
+      complete(StatusCodes.OK)
+    }
+
+  /**
+    * Type #4: "actionable" directives
+    */
+
+  val completeOkRoute = complete(StatusCodes.OK)
+
+  val failedRoute =
+    path("notSupported") {
+      failWith(new RuntimeException("Unsupported!")) // completes with HTTP 500
+    }
+
+  val routeWithRejection =
+//    path("home") {
+//      reject
+//    } ~
+    path("index") {
+      completeOkRoute
+    }
+
+  /**
+    * Exercise: can you spot the mistake?!
+    */
+  val getOrPutPath =
+    path("api" / "myEndpoint") {
+      get {
+        completeOkRoute
+      } ~
+      post {
+        complete(StatusCodes.Forbidden)
+      }
+    }
+
+  Http().bindAndHandle(getOrPutPath, "localhost", 8081)
 }
