@@ -82,7 +82,7 @@ object LowLevelRest extends App with GuitarStoreJsonProtocol {
 
   /*
     - GET on localhost:8080/api/guitar => ALL the guitars in the store
-    X GET on localhost:8080/api/guitar?id=X => fetches the guitar associated with id X
+    - GET on localhost:8080/api/guitar?id=X => fetches the guitar associated with id X
     - POST on localhost:8080/api/guitar => insert the guitar into the store
    */
 
