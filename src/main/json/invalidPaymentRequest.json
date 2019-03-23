@@ -1,0 +1,9 @@
+{
+  "creditCard": {
+    "serialNumber": "1234-1234-1234-1234",
+    "securityCode": "123",
+    "account": "rx-65-sd-23"
+  },
+  "receiverAccount": "td-23-gb-67",
+  "amount": 99
+}
