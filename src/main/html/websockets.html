@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <script>
+            var exampleSocket = new WebSocket("ws://localhost:8080/greeter");
+            console.log("starting websocket...");
+
+            exampleSocket.onmessage = function(event) {
+                var newChild = document.createElement("div");
+                newChild.innerText = event.data;
+                document.getElementById("1").appendChild(newChild);
+            };
+
+            exampleSocket.onopen = function(event) {
+                exampleSocket.send("socket seems to be open...");
+            };
+
+            exampleSocket.send("socket says: hello, server!");
+        </script>
+    </head>
+
+    <body>
+        Starting websocket...
+        <div id="1">
+        </div>
+    </body>
+
+</html>
