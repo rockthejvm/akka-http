@@ -42,7 +42,7 @@ The tags are as follows:
 * `3.9-handling-exceptions`
 * `3.10-routing-testkit`
 * `3.11-websockets`
-* `3.12-uploading-files
+* `3.12-uploading-files`
 * `3.13-jwt`
 * `4.1-client-connection-level-api`
 * `4.2-host-level-api`
