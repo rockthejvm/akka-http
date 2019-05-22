@@ -42,7 +42,8 @@ object JwtAuthorization extends App with SprayJsonSupport {
     val claims = JwtClaim(
       expiration = Some(System.currentTimeMillis() / 1000 + TimeUnit.DAYS.toSeconds(expirationPeriodInDays)),
       issuedAt = Some(System.currentTimeMillis() / 1000),
-      issuer = Some("rockthejvm.com")
+      issuer = Some("rockthejvm.com"),
+      subject = Some(username)
     )
 
     JwtSprayJson.encode(claims, secretKey, algorithm) // JWT string
