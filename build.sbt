@@ -1,4 +1,4 @@
-name := "udemy-akka-http"
+name := "akka-http"
 
 version := "0.1"
 
