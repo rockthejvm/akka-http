@@ -35,10 +35,8 @@ object HttpsContext {
 
 object LowLevelHttps extends App {
 
-  implicit val system = ActorSystem("LowLevelHttps")
-  implicit val materrializer = ActorMaterializer()
-
-
+  implicit val system: ActorSystem = ActorSystem("LowLevelHttps")
+  // implicit val materializer: ActorMaterializer = ActorMaterializer() // needed only for Akka Streams < 2.6
 
   val requestHandler: HttpRequest => HttpResponse = {
     case HttpRequest(HttpMethods.GET, _, _, _, _) =>

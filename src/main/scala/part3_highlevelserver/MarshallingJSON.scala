@@ -66,8 +66,8 @@ object MarshallingJSON extends App
   // step 4
   with SprayJsonSupport {
 
-  implicit val system = ActorSystem("MarshallingJSON")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("MarshallingJSON")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
   import GameAreaMap._
 
@@ -91,7 +91,7 @@ object MarshallingJSON extends App
     - (Exercise) DELETE /api/player with JSON payload, removes the player from the map
    */
 
-  implicit val timeout = Timeout(2 seconds)
+  implicit val timeout: Timeout = Timeout(2.seconds)
   val rtjvmGameRouteSkel =
     pathPrefix("api" / "player") {
       get {

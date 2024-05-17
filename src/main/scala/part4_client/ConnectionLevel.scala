@@ -12,8 +12,8 @@ import spray.json._
 
 object ConnectionLevel extends App with PaymentJsonProtocol {
 
-  implicit val system = ActorSystem("ConnectionLevel")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("ConnectionLevel")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
 

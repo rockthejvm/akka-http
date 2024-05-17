@@ -14,8 +14,8 @@ import scala.util.{Failure, Success}
 
 object LowLevelAPI extends App {
 
-  implicit val system = ActorSystem("LowLevelServerAPI")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("LowLevelServerAPI")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
   val serverSource = Http().bind("localhost", 8000)
@@ -27,7 +27,7 @@ object LowLevelAPI extends App {
   serverBindingFuture.onComplete {
     case Success(binding) =>
       println("Server binding successful.")
-      binding.terminate(2 seconds)
+      binding.terminate(2.seconds)
     case Failure(ex) => println(s"Server binding failed: $ex")
   }
 

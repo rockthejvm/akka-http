@@ -75,8 +75,8 @@ trait GuitarStoreJsonProtocol extends DefaultJsonProtocol {
 
 object LowLevelRest extends App with GuitarStoreJsonProtocol {
 
-  implicit val system = ActorSystem("LowLevelRest")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("LowLevelRest")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
   import GuitarDB._
 
@@ -118,7 +118,7 @@ object LowLevelRest extends App with GuitarStoreJsonProtocol {
   /*
     server code
    */
-  implicit val defaultTimeout = Timeout(2 seconds)
+  implicit val defaultTimeout: Timeout = Timeout(2.seconds)
 
   def getGuitar(query: Query): Future[HttpResponse] = {
     val guitarId = query.get("id").map(_.toInt) // Option[Int]
@@ -197,7 +197,7 @@ object LowLevelRest extends App with GuitarStoreJsonProtocol {
 
     case HttpRequest(HttpMethods.POST, Uri.Path("/api/guitar"), _, entity, _) =>
       // entities are a Source[ByteString]
-      val strictEntityFuture = entity.toStrict(3 seconds)
+      val strictEntityFuture = entity.toStrict(3.seconds)
       strictEntityFuture.flatMap { strictEntity =>
 
         val guitarJsonString = strictEntity.data.utf8String

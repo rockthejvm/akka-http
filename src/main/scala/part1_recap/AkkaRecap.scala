@@ -66,13 +66,13 @@ object AkkaRecap extends App {
   import system.dispatcher
 
   import scala.concurrent.duration._
-  system.scheduler.scheduleOnce(2 seconds) {
+  system.scheduler.scheduleOnce(2.seconds) {
     actor ! "delayed happy birthday!"
   }
 
   // Akka patterns including FSM + ask pattern
   import akka.pattern.ask
-  implicit val timeout = Timeout(3 seconds)
+  implicit val timeout: Timeout = Timeout(3.seconds)
 
   val future = actor ? "question"
 

@@ -13,8 +13,8 @@ import spray.json._
 
 object HostLevel extends App with PaymentJsonProtocol {
 
-  implicit val system = ActorSystem("HostLevel")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("HostLevel")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
   val poolFlow = Http().cachedHostConnectionPool[Int]("www.google.com")

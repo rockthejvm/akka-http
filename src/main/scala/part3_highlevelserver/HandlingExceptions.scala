@@ -9,8 +9,8 @@ import akka.http.scaladsl.server.ExceptionHandler
 
 object HandlingExceptions extends App {
 
-  implicit val system = ActorSystem("HandlingExceptions")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("HandlingExceptions")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
   val simpleRoute =

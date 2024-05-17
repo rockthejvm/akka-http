@@ -18,8 +18,8 @@ trait PersonJsonProtocol extends DefaultJsonProtocol {
 
 object HighLevelExercise extends App with PersonJsonProtocol {
 
-  implicit val system = ActorSystem("HighLevelExercise")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("HighLevelExercise")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
 
@@ -63,7 +63,7 @@ object HighLevelExercise extends App with PersonJsonProtocol {
       } ~
       (post & pathEndOrSingleSlash & extractRequest & extractLog) { (request, log) =>
         val entity = request.entity
-        val strictEntityFuture = entity.toStrict(2 seconds)
+        val strictEntityFuture = entity.toStrict(2.seconds)
         val personFuture = strictEntityFuture.map(_.data.utf8String.parseJson.convertTo[Person])
 
         onComplete(personFuture) {

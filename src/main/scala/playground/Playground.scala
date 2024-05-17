@@ -9,8 +9,9 @@ import scala.io.StdIn
 
 object Playground extends App {
 
-  implicit val system = ActorSystem("AkkaHttpPlayground")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("AkkaHttpPlayground")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
+
   import system.dispatcher
 
   val simpleRoute =

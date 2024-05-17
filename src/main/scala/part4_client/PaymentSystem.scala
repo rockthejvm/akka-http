@@ -40,13 +40,13 @@ class PaymentValidator extends Actor with ActorLogging {
 object PaymentSystem extends App with PaymentJsonProtocol with SprayJsonSupport {
 
   // microservice for payments
-  implicit val system = ActorSystem("PaymentSystem")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("PaymentSystem")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
   import PaymentSystemDomain._
 
   val paymentValidator = system.actorOf(Props[PaymentValidator], "paymentValidator")
-  implicit val timeout = Timeout(2 seconds)
+  implicit val timeout: Timeout = Timeout(2.seconds)
 
   val paymentRoute =
     path("api" / "payments") {

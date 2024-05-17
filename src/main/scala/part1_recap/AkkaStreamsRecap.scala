@@ -8,8 +8,8 @@ import scala.util.{Failure, Success}
 
 object AkkaStreamsRecap extends App {
 
-  implicit val system = ActorSystem("AkkaStreamsRecap")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("AkkaStreamsRecap")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
   val source = Source(1 to 100)

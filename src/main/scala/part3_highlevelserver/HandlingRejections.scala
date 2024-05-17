@@ -9,8 +9,8 @@ import akka.http.scaladsl.server.{MethodRejection, MissingQueryParamRejection, R
 
 object HandlingRejections extends App {
 
-  implicit val system = ActorSystem("HandlingRejections")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("HandlingRejections")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
 

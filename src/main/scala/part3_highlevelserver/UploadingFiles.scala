@@ -6,7 +6,7 @@ import akka.Done
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, Multipart}
-import akka.stream.ActorMaterializer
+import akka.stream.{ActorMaterializer, IOResult}
 import akka.http.scaladsl.server.Directives._
 import akka.stream.scaladsl.{FileIO, Sink, Source}
 import akka.util.ByteString
@@ -16,8 +16,8 @@ import scala.util.{Failure, Success}
 
 object UploadingFiles extends App {
 
-  implicit val system = ActorSystem()
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem()
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
   val filesRoute =
@@ -56,10 +56,11 @@ object UploadingFiles extends App {
             log.info(s"Writing to file: $filename")
 
             val fileContentsSource: Source[ByteString, _] = bodyPart.entity.dataBytes
-            val fileContentsSink: Sink[ByteString, _] = FileIO.toPath(file.toPath)
+            val fileContentsSink: Sink[ByteString, Future[IOResult]] = FileIO.toPath(file.toPath)
 
             // writing the data to the file
-            fileContentsSource.runWith(fileContentsSink)
+            val mat = fileContentsSource.runWith(fileContentsSink)
+            // treat the Future[IOResult] here
           }
         }
 
@@ -73,4 +74,5 @@ object UploadingFiles extends App {
 
   Http().bindAndHandle(filesRoute, "localhost", 8080)
 
+  def jeg = ???
 }

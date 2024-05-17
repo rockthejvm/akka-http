@@ -22,8 +22,8 @@ object SecurityDomain extends DefaultJsonProtocol {
 
 object JwtAuthorization extends App with SprayJsonSupport {
 
-  implicit val system = ActorSystem()
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem()
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
   import SecurityDomain._
 

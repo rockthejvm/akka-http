@@ -11,8 +11,8 @@ import spray.json._
 
 object RequestLevel extends App with PaymentJsonProtocol {
 
-  implicit val system = ActorSystem("RequestLevelAPI")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("RequestLevelAPI")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
   val responseFuture = Http().singleRequest(HttpRequest(uri = "http://www.google.com"))

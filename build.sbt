@@ -2,11 +2,11 @@ name := "akka-http"
 
 version := "0.1"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.13.14"
 
-val akkaVersion = "2.5.20"
-val akkaHttpVersion = "10.1.7"
-val scalaTestVersion = "3.0.5"
+val akkaVersion = "2.6.20"
+val akkaHttpVersion = "10.2.10"
+val scalaTestVersion = "3.2.7"
 
 libraryDependencies ++= Seq(
   // akka streams
@@ -20,6 +20,5 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % scalaTestVersion,
   
   // JWT
-  "com.pauldijou" %% "jwt-spray-json" % "2.1.0"
-
+  "com.pauldijou" %% "jwt-spray-json" % "5.0.0"
 )

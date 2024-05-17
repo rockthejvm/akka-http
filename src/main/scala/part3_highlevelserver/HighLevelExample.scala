@@ -18,8 +18,8 @@ import spray.json._
 
 object HighLevelExample extends App with GuitarStoreJsonProtocol {
 
-  implicit val system = ActorSystem("HighLevelExample")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("HighLevelExample")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
   import GuitarDB._
@@ -45,7 +45,7 @@ object HighLevelExample extends App with GuitarStoreJsonProtocol {
     guitarDb ! CreateGuitar(guitar)
   }
 
-  implicit val timeout = Timeout(2 seconds)
+  implicit val timeout: Timeout = Timeout(2.seconds)
   val guitarServerRoute =
     path("api" / "guitar") {
       // ALWAYS PUT THE MORE SPECIFIC ROUTE FIRST

@@ -8,8 +8,8 @@ import akka.stream.ActorMaterializer
 
 object DirectivesBreakdown extends App {
 
-  implicit val system = ActorSystem("DirectivesBreakdown")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("DirectivesBreakdown")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
   import akka.http.scaladsl.server.Directives._
 
@@ -25,7 +25,7 @@ object DirectivesBreakdown extends App {
     path("about") {
       complete(
         HttpEntity(
-          ContentTypes.`application/json`,
+          ContentTypes.`text/html(UTF-8)`,
           """
             |<html>
             | <body>
@@ -44,6 +44,7 @@ object DirectivesBreakdown extends App {
 
   val dontConfuse =
     path("api/myEndpoint") {
+      host()
       complete(StatusCodes.OK)
     }
 

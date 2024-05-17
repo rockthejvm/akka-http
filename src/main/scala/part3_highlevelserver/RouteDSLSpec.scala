@@ -2,10 +2,11 @@ package part3_highlevelserver
 
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.{ContentTypes, StatusCodes}
-import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Directives.{not => _, _}
 import akka.http.scaladsl.server.MethodRejection
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.matchers.should.Matchers._
+import org.scalatest.wordspec.AnyWordSpecLike
 import spray.json._
 
 import scala.concurrent.Await
@@ -17,7 +18,7 @@ trait BookJsonProtocol extends DefaultJsonProtocol {
   implicit val bookFormat = jsonFormat3(Book)
 }
 
-class RouteDSLSpec extends WordSpec with Matchers with ScalatestRouteTest with BookJsonProtocol {
+class RouteDSLSpec extends AnyWordSpecLike with ScalatestRouteTest with BookJsonProtocol {
 
   import RouteDSLSpec._
 
@@ -43,8 +44,8 @@ class RouteDSLSpec extends WordSpec with Matchers with ScalatestRouteTest with B
       Get("/api/book/2") ~> libraryRoute ~> check {
         response.status shouldBe StatusCodes.OK
 
-        val strictEntityFuture = response.entity.toStrict(1 second)
-        val strictEntity = Await.result(strictEntityFuture, 1 second)
+        val strictEntityFuture = response.entity.toStrict(1.seconds)
+        val strictEntity = Await.result(strictEntityFuture, 1.seconds)
 
         strictEntity.contentType shouldBe ContentTypes.`application/json`
 
@@ -64,6 +65,8 @@ class RouteDSLSpec extends WordSpec with Matchers with ScalatestRouteTest with B
 
     "not accept other methods than POST and GET" in {
       Delete("/api/book") ~> libraryRoute ~> check {
+        // careful with the `not` verb because it's a directive as well
+        // can solve the ambiguity by adding an `import akka.http.scaladsl.server.Directives.{not => _, _}` to remove it
         rejections should not be empty   // "natural language" style
         rejections.should(not).be(empty) // same
 

@@ -9,8 +9,8 @@ import part2_lowlevelserver.HttpsContext
 
 object HighLevelIntro extends App {
 
-  implicit val system = ActorSystem("HighLevelIntro")
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem("HighLevelIntro")
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
   // directives

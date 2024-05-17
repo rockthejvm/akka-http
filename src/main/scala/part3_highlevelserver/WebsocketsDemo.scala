@@ -13,8 +13,8 @@ import scala.concurrent.duration._
 
 object WebsocketsDemo extends App {
 
-  implicit val system = ActorSystem()
-  implicit val materializer = ActorMaterializer()
+  implicit val system: ActorSystem = ActorSystem()
+  // implicit val materializer = ActorMaterializer() // needed only with Akka Streams < 2.6
   import system.dispatcher
 
   // Message: TextMessage vs BinaryMessage
@@ -90,7 +90,7 @@ object WebsocketsDemo extends App {
   )
 
   val socialMessages = socialFeed
-    .throttle(1, 2 seconds)
+    .throttle(1, 2.seconds)
     .map(socialPost => TextMessage(s"${socialPost.owner} said: ${socialPost.content}"))
 
   val socialFlow: Flow[Message, Message, Any] = Flow.fromSinkAndSource(
